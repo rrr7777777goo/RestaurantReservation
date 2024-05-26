@@ -1,0 +1,22 @@
+### 회원가입
+POST http://localhost:8085/auth/signup
+Content-Type: application/json
+
+{
+  "signupid": "grace21",
+  "password": "grace1123!@",
+  "roles": ["ROLE_USER", "ROLE_USER","ROLE_OWNER"]
+}
+
+### 로그인
+POST http://localhost:8085/auth/signin
+Content-Type: application/json
+
+{
+  "signupid": "grace21",
+  "password": "grace1123!@"
+}
+
+###
+GET http://localhost:8085/auth/test001
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTY2NTQ0NTYsImV4cCI6MTcxNjY1NjI1Nn0.bXK99hbTpqx_CKSduG2Nq7EHhg8SYxzSbRoZtkb8-DAoDNN5LtpNVTerLwgHUOTH8pn7imMFn-3tNtc0_Jw8xQ
