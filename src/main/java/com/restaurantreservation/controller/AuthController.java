@@ -41,19 +41,7 @@ public class AuthController {
         var member = this.memberService.authenticate(request);
         var token = this.tokenProvider.generateToken(member.getSignupid(), member.getRoles());
         log.info("user login -> " + request.getSignupid());
+
         return ResponseEntity.ok(token);
     }
-
-    @GetMapping("/test001")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> test001() {
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new xixi());
-    }
-}
-
-@Getter
-class xixi {
-    int x = 34;
-    double xz = 34.44;
 }

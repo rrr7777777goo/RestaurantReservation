@@ -2,18 +2,18 @@ package com.restaurantreservation.service;
 
 import com.restaurantreservation.domain.Auth;
 import com.restaurantreservation.domain.Member;
+import com.restaurantreservation.domain.MemberIdInterface;
 import com.restaurantreservation.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -60,6 +60,11 @@ public class MemberService {
         return user;
     }
 
+    public MemberIdInterface xxx() {
+        var x = this.memberRepository.findidBySignupid("grace2").orElseThrow(() -> new UsernameNotFoundException("!!"));
+
+        return x;
+    }
     public void yopyop() {
         // Member signinMember = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 로그인 ID 추출
