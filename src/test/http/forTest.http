@@ -24,10 +24,6 @@ Content-Type: application/json
   "password": "grace1123!@"
 }
 
-###
-GET http://localhost:8085/auth/test001
-Authorization: Bearer
-
 ### 식당 등록 (ROLE_OWNER 권한이 있을 경우에 가능)
 POST http://localhost:8085/restaurant/add
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTY5MDU3MzIsImV4cCI6MTcxNjkwNzUzMn0.jqZni7lcV50xnqfTSFfyiYJkr-h01NbXdBONuP1FotqrF3xbtl_8KgJsvv5onnYsA3HBbv3tCGv6VTEe1S9ONA
@@ -40,3 +36,15 @@ Content-Type: application/json
   "lat" : 12.33,
   "lnt" : 35.22
 }
+
+### 식당 목록 이름순으로 조회
+GET http://localhost:8085/restaurant/getOrderByName?size=10&page=0
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTY5MTI1MTgsImV4cCI6MTcxNjkxNDMxOH0.Xa8k0ChvoNlT1VsHrDu-a-pNrghee6h-pVbTXY1vIFK4FDIjnuDHk-rGHcs3PiW7aVbRBqDxTf2Gbw6DkGMZkA
+
+### 식당 목록 리뷰점수 높은 순서대로 조회
+GET http://localhost:8085/restaurant/getOrderByReviewScore?size=10&page=0
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTY5MTI1MTgsImV4cCI6MTcxNjkxNDMxOH0.Xa8k0ChvoNlT1VsHrDu-a-pNrghee6h-pVbTXY1vIFK4FDIjnuDHk-rGHcs3PiW7aVbRBqDxTf2Gbw6DkGMZkA
+
+### 식당 목록 입력한 위치와 가까운 순서대로 조회
+GET http://localhost:8085/restaurant/getOrderByLength?size=10&page=0&lat=0.0&lnt=0.0
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTY5MTI1MTgsImV4cCI6MTcxNjkxNDMxOH0.Xa8k0ChvoNlT1VsHrDu-a-pNrghee6h-pVbTXY1vIFK4FDIjnuDHk-rGHcs3PiW7aVbRBqDxTf2Gbw6DkGMZkA

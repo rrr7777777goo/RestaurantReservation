@@ -60,11 +60,6 @@ public class MemberService {
         return user;
     }
 
-    public MemberIdInterface xxx() {
-        var x = this.memberRepository.findidBySignupid("grace2").orElseThrow(() -> new UsernameNotFoundException("!!"));
-
-        return x;
-    }
     public void yopyop() {
         // Member signinMember = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 로그인 ID 추출
