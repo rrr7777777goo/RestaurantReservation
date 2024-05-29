@@ -1,13 +1,11 @@
-package com.restaurantreservation.domain;
+package com.restaurantreservation.domain.restaurant;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Builder
 @Entity(name = "restaurant")
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

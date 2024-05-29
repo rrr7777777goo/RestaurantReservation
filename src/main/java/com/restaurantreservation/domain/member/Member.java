@@ -1,4 +1,4 @@
-package com.restaurantreservation.domain;
+package com.restaurantreservation.domain.member;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -9,7 +9,6 @@ import java.util.*;
 @Builder
 @Entity(name = "user")
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

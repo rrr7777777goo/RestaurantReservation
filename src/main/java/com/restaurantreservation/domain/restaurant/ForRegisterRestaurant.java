@@ -1,4 +1,4 @@
-package com.restaurantreservation.domain;
+package com.restaurantreservation.domain.restaurant;
 
 import lombok.Data;
 

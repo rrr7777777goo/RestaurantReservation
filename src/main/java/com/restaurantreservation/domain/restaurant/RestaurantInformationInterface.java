@@ -1,6 +1,9 @@
-package com.restaurantreservation.domain;
+package com.restaurantreservation.domain.restaurant;
 
 public interface RestaurantInformationInterface {
+    // 식당 아이디
+    int getId();
+
     // 식당 이름
     String getName();
     // 식당 주소

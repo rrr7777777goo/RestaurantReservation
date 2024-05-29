@@ -1,4 +1,4 @@
-package com.restaurantreservation.domain;
+package com.restaurantreservation.domain.review;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Builder
 @Entity(name = "review")
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,5 +28,5 @@ public class Review {
     private int score;
 
     // 리뷰 내용
-    private boolean description;
+    private String description;
 }

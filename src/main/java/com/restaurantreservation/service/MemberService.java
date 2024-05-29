@@ -1,8 +1,7 @@
 package com.restaurantreservation.service;
 
-import com.restaurantreservation.domain.Auth;
-import com.restaurantreservation.domain.Member;
-import com.restaurantreservation.domain.MemberIdInterface;
+import com.restaurantreservation.domain.member.Auth;
+import com.restaurantreservation.domain.member.Member;
 import com.restaurantreservation.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 @Slf4j
 @Service
