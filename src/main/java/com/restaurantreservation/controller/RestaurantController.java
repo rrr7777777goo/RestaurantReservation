@@ -25,23 +25,20 @@ public class RestaurantController {
     }
 
     @GetMapping("/getOrderByName")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> getRestaurantOrderByName(Pageable pageable) {
-        var result = this.restaurantService.getOrderByName(pageable);
+    public ResponseEntity<?> getRestaurantOrderByNameForKeyword(Pageable pageable, @RequestParam(required = false) String keyword) {
+        var result = this.restaurantService.getOrderByName(pageable, keyword);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/getOrderByReviewScore")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> getRestaurantOrderByReviewScore(Pageable pageable) {
-        var result = this.restaurantService.getOrderByReviewScore(pageable);
+    public ResponseEntity<?> getRestaurantOrderByReviewScore(Pageable pageable, @RequestParam(required = false) String keyword) {
+        var result = this.restaurantService.getOrderByReviewScore(pageable, keyword);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/getOrderByLength")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> getRestaurantOrderByLength(Pageable pageable, @RequestParam double lat, @RequestParam double lnt) {
-        var result = this.restaurantService.getOrderByLength(pageable, lat, lnt);
+    public ResponseEntity<?> getRestaurantOrderByLength(Pageable pageable, @RequestParam double lat, @RequestParam double lnt, @RequestParam(required = false) String keyword) {
+        var result = this.restaurantService.getOrderByLength(pageable, lat, lnt, keyword);
         return ResponseEntity.ok(result);
     }
 }

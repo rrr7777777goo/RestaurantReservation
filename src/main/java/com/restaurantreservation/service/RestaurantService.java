@@ -33,18 +33,21 @@ public class RestaurantService {
         return result;
     }
 
-    public List<RestaurantInformationInterface> getOrderByName(Pageable pageable) {
-        var result = this.restaurantRepository.findAllOrderByName(pageable).getContent();
+    public List<RestaurantInformationInterface> getOrderByName(Pageable pageable, String keyword) {
+        if(keyword == null) keyword = "";
+        var result = this.restaurantRepository.findAllOrderByName(pageable, keyword).getContent();
         return result;
     }
 
-    public List<RestaurantInformationInterface> getOrderByReviewScore(Pageable pageable) {
-        var result = this.restaurantRepository.findAllOrderByReviewScore(pageable).getContent();
+    public List<RestaurantInformationInterface> getOrderByReviewScore(Pageable pageable, String keyword) {
+        if(keyword == null) keyword = "";
+        var result = this.restaurantRepository.findAllOrderByReviewScore(pageable, keyword).getContent();
         return result;
     }
 
-    public List<RestaurantInformationInterface> getOrderByLength(Pageable pageable, double lat, double lnt) {
-        var result = this.restaurantRepository.findAllOrderByLength(pageable, lat, lnt).getContent();
+    public List<RestaurantInformationInterface> getOrderByLength(Pageable pageable, double lat, double lnt, String keyword) {
+        if(keyword == null) keyword = "";
+        var result = this.restaurantRepository.findAllOrderByLength(pageable, keyword, lat, lnt).getContent();
         return result;
     }
 }

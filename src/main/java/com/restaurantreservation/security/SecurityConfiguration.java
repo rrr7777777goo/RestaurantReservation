@@ -32,7 +32,13 @@ public class SecurityConfiguration {
         http.httpBasic(HttpBasicConfigurer::disable)
                 .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(request -> request.requestMatchers("/auth/signup", "/auth/signin").permitAll().anyRequest().authenticated())
+            .authorizeHttpRequests(request -> request.requestMatchers(
+                    "/auth/signup",
+                    "/auth/signin",
+                    "restaurant/getOrderByName",
+                    "restaurant/getOrderByReviewScore",
+                    "restaurant/getOrderByLength"
+            ).permitAll().anyRequest().authenticated())
             .addFilterBefore(this.authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
