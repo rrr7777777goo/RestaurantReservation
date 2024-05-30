@@ -1,10 +1,7 @@
 package com.restaurantreservation.service;
 
 import com.restaurantreservation.domain.member.MemberIdInterface;
-import com.restaurantreservation.domain.reservation.ApproveStatus;
-import com.restaurantreservation.domain.reservation.ForApproveOrRejectReservation;
-import com.restaurantreservation.domain.reservation.ForRegisterReservation;
-import com.restaurantreservation.domain.reservation.Reservation;
+import com.restaurantreservation.domain.reservation.*;
 import com.restaurantreservation.repository.MemberRepository;
 import com.restaurantreservation.repository.ReservationRepository;
 import lombok.AllArgsConstructor;
@@ -16,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -70,7 +68,7 @@ public class ReservationService {
         return LocalDateTime.parse(sb.toString(), formatter);
     }
 
-    public Object getReservationForDate(Pageable pageable, String date) {
+    public List<ReservationInformationInterface> getReservationForDate(Pageable pageable, String date) {
         LocalDateTime startTime = parseLocalDateTime(date, startTimeString);
         LocalDateTime endTime = parseLocalDateTime(date, endTimeString);
 
