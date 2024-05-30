@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class RestaurantService {
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     private final RestaurantRepository restaurantRepository;
 
     private MemberIdInterface getMemberIdInterface() {

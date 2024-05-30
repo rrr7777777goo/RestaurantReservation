@@ -17,7 +17,7 @@ import java.util.Collection;
 @Service
 @AllArgsConstructor
 public class MemberService {
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
     private final int minLength_signupid = 6;

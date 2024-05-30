@@ -48,7 +48,7 @@ public class ReservationController {
     @GetMapping("/getForDate")
     @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<?>  getReservationForDate(Pageable pageable, @RequestParam String date) {
-        var result = this.reservationService.getReservationForDate(pageable, date);
+        var result = this.reservationService.getReservationForDateAndLoginOwner(pageable, date);
         return ResponseEntity.ok(result);
     }
 }

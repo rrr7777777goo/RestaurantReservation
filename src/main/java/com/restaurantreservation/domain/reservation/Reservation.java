@@ -79,4 +79,16 @@ public class Reservation {
 
         this.visitstatus = VisitStatus.VISIT;
     }
+
+    public void checkBeforeReview() {
+        switch(this.approvestatus) {
+            case RESERVATRION_REQUEST:
+            case RESERVATION_REJECT:
+                throw new RuntimeException("현재 예약은 승인 처리가 되지 않은 상태입니다.");
+        }
+        switch(this.visitstatus) {
+            case NOT_VISIT:
+                throw new RuntimeException("현재 예약은 방문 처리가 되지 않은 상태입니다.");
+        }
+    }
 }

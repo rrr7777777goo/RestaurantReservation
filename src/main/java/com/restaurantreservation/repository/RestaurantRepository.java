@@ -11,8 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
-    Optional<Restaurant> findAllById(int id);
-
     @Query(value=
             "select a.id as id, a.name as name, a.address as address, a.description as description, a.lat as lat , a.lnt as lnt, (ifnull(avg(c.score), 0)) as reviewscore\n" +
             "from com.restaurantreservation.domain.restaurant.Restaurant as a \n" +
@@ -22,7 +20,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
             "group by a.id\n" +
             "order by a.name asc\n")
     Page<RestaurantInformationInterface> findAllOrderByName(Pageable pageable, String keyword);
-
 
     @Query(value=
             "select a.id as id, a.name as name, a.address as address, a.description as description, a.lat as lat , a.lnt as lnt, (ifnull(avg(c.score), 0)) as reviewscore\n" +
@@ -43,4 +40,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
             "group by a.id\n" +
             "order by power(lat - ?2, 2) + power(lnt - ?3, 2) asc\n")
     Page<RestaurantInformationInterface> findAllOrderByLength(Pageable pageable, String keyword, double lat, double lnt);
+
+    boolean existsById(int id);
 }

@@ -22,11 +22,19 @@ public class Review {
     private int reservationid;
 
     // 리뷰 작성 시간
-    private LocalDateTime reservationtime;
+    private LocalDateTime reviewtime;
 
     // 리뷰 점수
     private int score;
 
     // 리뷰 내용
     private String description;
+
+    public void updateReview(ForRequestReview forRequestReview) {
+        if(this.id == forRequestReview.getReviewid()) {
+            this.reviewtime = LocalDateTime.now();
+            this.score = forRequestReview.getScore();
+            this.description = forRequestReview.getDescription();
+        }
+    }
 }

@@ -19,8 +19,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ReservationService {
-    private MemberRepository memberRepository;
-    private ReservationRepository reservationRepository;
+    private final MemberRepository memberRepository;
+    private final ReservationRepository reservationRepository;
 
     private final String startTimeString = "00:00:00";
     private final String endTimeString = "23:59:59";
@@ -68,7 +68,7 @@ public class ReservationService {
         return LocalDateTime.parse(sb.toString(), formatter);
     }
 
-    public List<ReservationInformationInterface> getReservationForDate(Pageable pageable, String date) {
+    public List<ReservationInformationInterface> getReservationForDateAndLoginOwner(Pageable pageable, String date) {
         LocalDateTime startTime = parseLocalDateTime(date, startTimeString);
         LocalDateTime endTime = parseLocalDateTime(date, endTimeString);
 
@@ -78,7 +78,7 @@ public class ReservationService {
     }
 
     public Object visit(ForRequestReservation forRequestReservation) {
-        Reservation result = this.reservationRepository.findReservationForVisitCheck(forRequestReservation.getReservationid(), getMemberIdInterface().getId())
+        Reservation result = this.reservationRepository.findAllByIdAndUserid(forRequestReservation.getReservationid(), getMemberIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 예약 정보가 존재하지 않거나 로그인한 계정에서 예약정보를 승인할 수 있는 권한이 없습니다."));
         result.visitReservation();
         this.reservationRepository.save(result);

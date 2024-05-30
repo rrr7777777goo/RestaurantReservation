@@ -17,10 +17,16 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
             "where a.id = ?1 and a.restaurantid = b.id and b.ownerid = ?2")
     Optional<Reservation> findReservationForApproveOrDeny(int id, int ownerid);
 
-    @Query("select new com.restaurantreservation.domain.reservation.Reservation(a.id, a.userid, a.restaurantid, a.reservationtime, a.phonenumber, a.approvestatus, a.visitstatus) \n" +
-            "from com.restaurantreservation.domain.reservation.Reservation as a \n" +
-            "where a.id = ?1 and a.userid = ?2")
-    Optional<Reservation> findReservationForVisitCheck(int id, int userid);
+    // @Query("select new com.restaurantreservation.domain.reservation.Reservation(a.id, a.userid, a.restaurantid, a.reservationtime, a.phonenumber, a.approvestatus, a.visitstatus) \n" +
+    //         "from com.restaurantreservation.domain.reservation.Reservation as a \n" +
+    //        "where a.id = ?1 and a.userid = ?2")
+    Optional<Reservation> findAllByIdAndUserid(int id, int userid);
+
+    @Query("select b.id as reviewid, a.userid as userid \n" +
+             "from com.restaurantreservation.domain.reservation.Reservation as a, " +
+            "com.restaurantreservation.domain.review.Review as b\n" +
+            "where a.id = b.reservationid and b.id = ?1 and a.userid = ?2")
+    Optional<Object> existsByReviewIdAndUserid(int reviewid, int userid);
 
     @Query("select a.id as id, a.userid as userid, a.restaurantid as restaurantid, a.reservationtime as reservationtime, a.phonenumber as phonenumber, a.approvestatus as approvestatus, a.visitstatus as visitstatus, b.name as restaurantname \n" +
             "from com.restaurantreservation.domain.reservation.Reservation as a,\n" +
