@@ -3,6 +3,6 @@ package com.restaurantreservation.domain.reservation;
 import lombok.Data;
 
 @Data
-public class ForApproveOrRejectReservation {
+public class ForRequestReservation {
     private int reservationid;
 }

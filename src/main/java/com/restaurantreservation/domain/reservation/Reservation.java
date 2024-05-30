@@ -54,4 +54,29 @@ public class Reservation {
         }
         this.approvestatus = ApproveStatus.RESERVATION_REJECT;
     }
+
+    public void visitReservation() {
+        switch(this.approvestatus) {
+            case RESERVATRION_REQUEST:
+                throw new RuntimeException("현재 예약 승인이 되지 않아서 방문 처리가 불가능합니다.");
+            case RESERVATION_REJECT:
+                throw new RuntimeException("현재 예약은 거부 처리가 된 상태입니다.");
+        }
+        switch(this.visitstatus) {
+            case VISIT:
+                throw new RuntimeException("이미 방문처리가 된 상태입니다.");
+        }
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime checkTimeStart = reservationtime.minusHours(1);
+        LocalDateTime checkTimeEnd = reservationtime.minusMinutes(10);
+        if(currentTime.isBefore(checkTimeStart)) {
+            throw new RuntimeException("방문 처리가 불가능합니다.(방문 처리는 예약시간 1시간 전부터 가능합니다.)");
+        }
+        if(currentTime.isAfter(checkTimeEnd)) {
+            throw new RuntimeException("방문 처리가 불가능합니다.(방문 처리는 예약시간 10분전까지 완료되어야 합니다.)");
+        }
+
+        this.visitstatus = VisitStatus.VISIT;
+    }
 }

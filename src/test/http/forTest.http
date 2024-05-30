@@ -75,6 +75,15 @@ Content-Type: application/json
   "reservationid" : 8
 }
 
+### 예약 방문 확인 (ROLE_USER 권한이 있을 경우에 가능)
+POST http://localhost:8085/reservation/visit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcwNTI1NzgsImV4cCI6MTcxNzA1NDM3OH0.9Iq2gQqrcTbcAZgpmf6dgASSeH8ekyoDpiQsJgBRM1Q2M_UMdbOnyoWqlwWY08cGnu3yVKLjuW301EEWP9YY7A
+Content-Type: application/json
+
+{
+  "reservationid" : 8
+}
+
 ### 현재 로그인한 상점 주인의 상점들에 걸린 예약 정보를 조회 (시간 순으로 정렬)
 GET http://localhost:8085/reservation/getForDate?size=10&page=0&date=2024-04-30
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcwNDg1ODMsImV4cCI6MTcxNzA1MDM4M30.nPflF8qherVZUpHPoEineILW8Rq1IlSsX-zOQ8haQ9DdZucID5VGX-5o1soSbS3d8NCW3yLikmT9MiT1UEeGDA

@@ -1,7 +1,7 @@
 package com.restaurantreservation.controller;
 
 import com.restaurantreservation.domain.reservation.ApproveStatus;
-import com.restaurantreservation.domain.reservation.ForApproveOrRejectReservation;
+import com.restaurantreservation.domain.reservation.ForRequestReservation;
 import com.restaurantreservation.domain.reservation.ForRegisterReservation;
 import com.restaurantreservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -26,19 +26,26 @@ public class ReservationController {
 
     @PostMapping("/approve")
     @PreAuthorize("hasRole('OWNER')")
-    public ResponseEntity<?> reservationApprove(@RequestBody ForApproveOrRejectReservation request) {
+    public ResponseEntity<?> reservationApprove(@RequestBody ForRequestReservation request) {
         var result = this.reservationService.approve_or_reject(request, ApproveStatus.RESERVATION_APPROVE);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/reject")
     @PreAuthorize("hasRole('OWNER')")
-    public ResponseEntity<?> reservationDeny(@RequestBody ForApproveOrRejectReservation request) {
+    public ResponseEntity<?> reservationDeny(@RequestBody ForRequestReservation request) {
         var result = this.reservationService.approve_or_reject(request, ApproveStatus.RESERVATION_REJECT);
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("getForDate")
+    @PostMapping("/visit")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> reservationVisit(@RequestBody ForRequestReservation request) {
+        var result = this.reservationService.visit(request);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/getForDate")
     @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<?>  getReservationForDate(Pageable pageable, @RequestParam String date) {
         var result = this.reservationService.getReservationForDate(pageable, date);

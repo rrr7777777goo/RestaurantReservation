@@ -40,8 +40,8 @@ public class ReservationService {
         return result;
     }
 
-    public Reservation approve_or_reject(ForApproveOrRejectReservation forApproveOrRejectReservation, ApproveStatus approveStatus) {
-        Reservation reservation = this.reservationRepository.findReservationForIdAndOwnerId(forApproveOrRejectReservation.getReservationid(), getMemberIdInterface().getId())
+    public Reservation approve_or_reject(ForRequestReservation forRequestReservation, ApproveStatus approveStatus) {
+        Reservation reservation = this.reservationRepository.findReservationForApproveOrDeny(forRequestReservation.getReservationid(), getMemberIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 예약 정보가 존재하지 않거나 로그인한 계정에서 예약정보를 승인할 수 있는 권한이 없습니다."));
 
         switch(approveStatus) {
@@ -73,6 +73,15 @@ public class ReservationService {
         LocalDateTime endTime = parseLocalDateTime(date, endTimeString);
 
         var result = this.reservationRepository.findReservationForReservationDateAndOwnerId(pageable, startTime, endTime, getMemberIdInterface().getId()).getContent();
+
+        return result;
+    }
+
+    public Object visit(ForRequestReservation forRequestReservation) {
+        Reservation result = this.reservationRepository.findReservationForVisitCheck(forRequestReservation.getReservationid(), getMemberIdInterface().getId())
+                .orElseThrow(() -> new RuntimeException("현재 예약 정보가 존재하지 않거나 로그인한 계정에서 예약정보를 승인할 수 있는 권한이 없습니다."));
+        result.visitReservation();
+        this.reservationRepository.save(result);
         return result;
     }
 }
