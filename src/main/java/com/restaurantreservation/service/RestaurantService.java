@@ -23,11 +23,7 @@ public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
     private MemberIdInterface getMemberIdInterface() {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 현재 로그인중인 ID
-
-        MemberIdInterface memberIdInterface = this.memberRepository.findidBySignupid(username)
-                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 ID입니다. -> " + username));
-
+        MemberIdInterface memberIdInterface = (MemberIdInterface) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 현재 로그인중인 ID
         return memberIdInterface;
     }
 

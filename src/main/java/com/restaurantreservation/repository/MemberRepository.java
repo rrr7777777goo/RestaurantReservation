@@ -10,7 +10,9 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Integer> {
     Optional<Member> findBySignupid(String signupid);
 
-    @Query(value="select m.id as id from com.restaurantreservation.domain.member.Member as m where m.signupid = ?1")
+    @Query(value="select m.id as id, m.signupid as signupid" +
+            " from com.restaurantreservation.domain.member.Member as m" +
+            " where m.signupid = ?1")
     Optional<MemberIdInterface> findidBySignupid(String signupid);
 
     boolean existsBySignupid(String signupid);

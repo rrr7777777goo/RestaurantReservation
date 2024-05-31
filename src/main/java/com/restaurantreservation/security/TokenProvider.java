@@ -1,5 +1,6 @@
 package com.restaurantreservation.security;
 
+import com.restaurantreservation.domain.member.MemberIdInterface;
 import com.restaurantreservation.service.MemberService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -50,11 +51,9 @@ public class TokenProvider {
     }
 
     public Authentication getAuthentication(String jwt) {
-        boolean isSignupidValid = this.memberService.isSignupidValid(this.getUsername(jwt));
-        if(!isSignupidValid) {
-            throw new RuntimeException("존재하지 않는 아이디입니다.");
-        }
-        return new UsernamePasswordAuthenticationToken(this.getUsername(jwt), "", this.getAuthorities(jwt));
+        MemberIdInterface memberIdInterface = this.memberService.loadUserBySignupid(this.getUsername(jwt));
+
+        return new UsernamePasswordAuthenticationToken(memberIdInterface, "", this.getAuthorities(jwt));
     }
 
     public String getUsername(String token) {

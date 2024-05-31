@@ -2,11 +2,13 @@ package com.restaurantreservation.service;
 
 import com.restaurantreservation.domain.member.Auth;
 import com.restaurantreservation.domain.member.Member;
+import com.restaurantreservation.domain.member.MemberIdInterface;
 import com.restaurantreservation.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,8 +45,13 @@ public class MemberService {
         return result;
     }
 
-    public boolean isSignupidValid(String signupid) {
-        return this.memberRepository.existsBySignupid(signupid);
+    // public boolean isSignupidValid(String signupid) {
+    //     return this.memberRepository.existsBySignupid(signupid);
+    // }
+
+    public MemberIdInterface loadUserBySignupid(String signupid) {
+        return this.memberRepository.findidBySignupid(signupid)
+                .orElseThrow(() -> new UsernameNotFoundException("couldn't find user ->" + signupid));
     }
 
     public Member authenticate(Auth.SignIn member) {

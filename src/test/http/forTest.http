@@ -26,7 +26,7 @@ Content-Type: application/json
 
 ### 식당 등록 (ROLE_OWNER 권한이 있을 경우에 가능)
 POST http://localhost:8085/restaurant/add
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTY5ODg4NzAsImV4cCI6MTcxNjk5MDY3MH0.J4ECwQB3LUW3fFp5p2kjxT2KxHzKx38CRvY_mIXUgyha6mykR6XI60kf_IEvzHDwpF6RqCho8wVIIZ1PQKapnA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcxNDEzODIsImV4cCI6MTcxNzE0MzE4Mn0.afr6Pd9vs4o-4h2y1hys4Q-7bvA-mEGlsWSQJ4nIA7G9eHgv8oyl-PIyvOAV4fC57BNY71T8XxA5KU8JUqYajw
 Content-Type: application/json
 
 {
@@ -48,7 +48,7 @@ GET http://localhost:8085/restaurant/getOrderByLength?size=10&page=0&lat=0.0&lnt
 
 ### 식당 예약 신청
 POST http://localhost:8085/reservation/add
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcwMDA4NzQsImV4cCI6MTcxNzAwMjY3NH0.lPD6mIKuOk5CKUqhO-VKVJIbISnbYq9ATM1GriSiA9enDWBdilQld1lRtdtMvMOWB3n2DNXFm1eLAYa-IEKzzQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcxNDEzODIsImV4cCI6MTcxNzE0MzE4Mn0.afr6Pd9vs4o-4h2y1hys4Q-7bvA-mEGlsWSQJ4nIA7G9eHgv8oyl-PIyvOAV4fC57BNY71T8XxA5KU8JUqYajw
 Content-Type: application/json
 
 {
@@ -59,20 +59,20 @@ Content-Type: application/json
 
 ### 예약 요청 승인 (ROLE_OWNER 권한이 있을 경우에 가능)
 POST http://localhost:8085/reservation/approve
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTY5ODg4NzAsImV4cCI6MTcxNjk5MDY3MH0.J4ECwQB3LUW3fFp5p2kjxT2KxHzKx38CRvY_mIXUgyha6mykR6XI60kf_IEvzHDwpF6RqCho8wVIIZ1PQKapnA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcxNDEzODIsImV4cCI6MTcxNzE0MzE4Mn0.afr6Pd9vs4o-4h2y1hys4Q-7bvA-mEGlsWSQJ4nIA7G9eHgv8oyl-PIyvOAV4fC57BNY71T8XxA5KU8JUqYajw
 Content-Type: application/json
 
 {
-  "reservationid" : 8
+  "reservationid" : 10
 }
 
 ### 예약 요청 거부 (ROLE_OWNER 권한이 있을 경우에 가능)
 POST http://localhost:8085/reservation/reject
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTY5ODg4NzAsImV4cCI6MTcxNjk5MDY3MH0.J4ECwQB3LUW3fFp5p2kjxT2KxHzKx38CRvY_mIXUgyha6mykR6XI60kf_IEvzHDwpF6RqCho8wVIIZ1PQKapnA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcxNDEzODIsImV4cCI6MTcxNzE0MzE4Mn0.afr6Pd9vs4o-4h2y1hys4Q-7bvA-mEGlsWSQJ4nIA7G9eHgv8oyl-PIyvOAV4fC57BNY71T8XxA5KU8JUqYajw
 Content-Type: application/json
 
 {
-  "reservationid" : 8
+  "reservationid" : 10
 }
 
 ### 예약 방문 확인 (ROLE_USER 권한이 있을 경우에 가능)
