@@ -35,9 +35,10 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(request -> request.requestMatchers(
                     "/auth/signup",
                     "/auth/signin",
-                    "restaurant/getOrderByName",
-                    "restaurant/getOrderByReviewScore",
-                    "restaurant/getOrderByLength"
+                    "restaurant/get/orderbytime",
+                    "restaurant/get/orderbyreviewscore",
+                    "restaurant/get/orderbylength",
+                    "review/get/orderbytime"
             ).permitAll().anyRequest().authenticated())
             .addFilterBefore(this.authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

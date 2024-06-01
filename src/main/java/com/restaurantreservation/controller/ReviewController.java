@@ -5,6 +5,7 @@ import com.restaurantreservation.domain.review.ForRequestReview;
 import com.restaurantreservation.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
+
+    @GetMapping("/get/orderbytime")
+    public ResponseEntity<?> getReviewOrderByTime(Pageable pageable, @RequestParam int restaurantid) {
+        var result = this.reviewService.getOrderByTime(pageable, restaurantid);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping("/add")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> addRestaurant(@RequestBody ForRegisterReview request) {

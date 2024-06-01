@@ -5,12 +5,16 @@ import com.restaurantreservation.domain.reservation.Reservation;
 import com.restaurantreservation.domain.review.ForRegisterReview;
 import com.restaurantreservation.domain.review.ForRequestReview;
 import com.restaurantreservation.domain.review.Review;
+import com.restaurantreservation.domain.review.ReviewInformationInterface;
 import com.restaurantreservation.repository.ReservationRepository;
 import com.restaurantreservation.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -51,6 +55,11 @@ public class ReviewService {
 
         review.updateReview(forRequestReview);
         var result = this.reviewRepository.save(review);
+        return result;
+    }
+
+    public List<ReviewInformationInterface> getOrderByTime(Pageable pageable, int restaurantid) {
+        var result = this.reviewRepository.findAllByRestaurantIdOrderByTime(pageable, restaurantid).getContent();
         return result;
     }
 }

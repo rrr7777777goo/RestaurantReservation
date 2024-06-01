@@ -134,6 +134,9 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiU
 GET http://localhost:8085/reservation/get/fromid?id=9
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyNTcyMzYsImV4cCI6MTcxNzI1OTAzNn0.NTh5MmmVWc4yZLQhCV0q3CgfqOm78Erhdth3USa6cD9QeOlhcIf4B1AJ6HHFqJbl6jHobLawZbT0BHU2QNWTpg
 
+### 특정 식당의 리뷰들을 최신순으로 조회
+GET http://localhost:8085/review/get/orderbytime?restaurantid=3
+
 ###
 POST http://localhost:8085/review/add
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcwNjU1NzUsImV4cCI6MTcxNzA2NzM3NX0.ECelmzSletBM62lMTjutYx3kNgfd45FLTz59ygkJ7TD7HYVP6c3tkiigiAKyrEqONkGo-HZlku-EYAbD1JVH4g
