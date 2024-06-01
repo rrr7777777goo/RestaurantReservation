@@ -33,4 +33,14 @@ public class Restaurant {
 
     // 식당 경도
     private double lnt;
+
+    public void updateRestaurant(ForRequestRestaurant forRequestRestaurant) {
+        if(this.id == forRequestRestaurant.getRestaurantid()) {
+            this.name = forRequestRestaurant.getName();
+            this.address = forRequestRestaurant.getAddress();
+            this.description = forRequestRestaurant.getDescription();
+            this.lat = forRequestRestaurant.getLat();
+            this.lnt = forRequestRestaurant.getLnt();
+        }
+    }
 }

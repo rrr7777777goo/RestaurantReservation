@@ -1,14 +1,12 @@
 package com.restaurantreservation.service;
 
-import com.restaurantreservation.domain.member.MemberIdInterface;
+import com.restaurantreservation.domain.member.Auth;
 import com.restaurantreservation.domain.reservation.*;
-import com.restaurantreservation.repository.MemberRepository;
 import com.restaurantreservation.repository.ReservationRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,25 +17,24 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ReservationService {
-    private final MemberRepository memberRepository;
     private final ReservationRepository reservationRepository;
 
     private final String startTimeString = "00:00:00";
     private final String endTimeString = "23:59:59";
 
-    private MemberIdInterface getMemberIdInterface() {
-        MemberIdInterface memberIdInterface = (MemberIdInterface) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 현재 로그인중인 ID
-        return memberIdInterface;
+    private Auth.IdInterface getIdInterface() {
+        Auth.IdInterface idInterface = (Auth.IdInterface) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return idInterface;
     }
 
     public Reservation register(ForRegisterReservation forRegisterReservation) {
-        var result = this.reservationRepository.save(forRegisterReservation.toEntity(getMemberIdInterface().getId()));
+        var result = this.reservationRepository.save(forRegisterReservation.toEntity(getIdInterface().getId()));
 
         return result;
     }
 
     public Reservation approve_or_reject(ForRequestReservation forRequestReservation, ApproveStatus approveStatus) {
-        Reservation reservation = this.reservationRepository.findReservationForApproveOrDeny(forRequestReservation.getReservationid(), getMemberIdInterface().getId())
+        Reservation reservation = this.reservationRepository.findReservationForApproveOrDeny(forRequestReservation.getReservationid(), getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 예약 정보가 존재하지 않거나 로그인한 계정에서 예약정보를 승인할 수 있는 권한이 없습니다."));
 
         switch(approveStatus) {
@@ -68,16 +65,31 @@ public class ReservationService {
         LocalDateTime startTime = parseLocalDateTime(date, startTimeString);
         LocalDateTime endTime = parseLocalDateTime(date, endTimeString);
 
-        var result = this.reservationRepository.findReservationForReservationDateAndOwnerId(pageable, startTime, endTime, getMemberIdInterface().getId()).getContent();
+        var result = this.reservationRepository.findReservationForReservationDateAndOwnerId(pageable, startTime, endTime, getIdInterface().getId()).getContent();
 
         return result;
     }
 
-    public Object visit(ForRequestReservation forRequestReservation) {
-        Reservation result = this.reservationRepository.findAllByIdAndUserid(forRequestReservation.getReservationid(), getMemberIdInterface().getId())
+    public List<ReservationInformationInterface> getReservationForDateAndLoginUser(Pageable pageable, String date) {
+        LocalDateTime startTime = parseLocalDateTime(date, startTimeString);
+        LocalDateTime endTime = parseLocalDateTime(date, endTimeString);
+
+        var result = this.reservationRepository.findReservationForReservationDateAndUserId(pageable, startTime, endTime, getIdInterface().getId()).getContent();
+
+        return result;
+    }
+
+    public Reservation visit(ForRequestReservation forRequestReservation) {
+        Reservation result = this.reservationRepository.findAllByIdAndUserid(forRequestReservation.getReservationid(), getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 예약 정보가 존재하지 않거나 로그인한 계정에서 예약정보를 승인할 수 있는 권한이 없습니다."));
         result.visitReservation();
         this.reservationRepository.save(result);
+        return result;
+    }
+
+    public ReservationInformationInterface getFromId(int id) {
+        var result = this.reservationRepository.getReservationFromIdAndUserId(id, getIdInterface().getId())
+                .orElseThrow(() -> new RuntimeException("현재 예약 정보가 존재하지 않거나 로그인한 계정에서 예약정보를 확인할 수 있는 권한이 없습니다."));
         return result;
     }
 }

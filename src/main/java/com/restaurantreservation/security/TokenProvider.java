@@ -1,6 +1,6 @@
 package com.restaurantreservation.security;
 
-import com.restaurantreservation.domain.member.MemberIdInterface;
+import com.restaurantreservation.domain.member.Auth;
 import com.restaurantreservation.service.MemberService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -51,7 +50,7 @@ public class TokenProvider {
     }
 
     public Authentication getAuthentication(String jwt) {
-        MemberIdInterface memberIdInterface = this.memberService.loadUserBySignupid(this.getUsername(jwt));
+        Auth.IdInterface memberIdInterface = this.memberService.loadUserBySignupid(this.getUsername(jwt));
 
         return new UsernamePasswordAuthenticationToken(memberIdInterface, "", this.getAuthorities(jwt));
     }

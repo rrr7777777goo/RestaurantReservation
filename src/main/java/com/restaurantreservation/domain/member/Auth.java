@@ -25,4 +25,9 @@ public class Auth {
                     .build();
         }
     }
+
+    public interface IdInterface {
+        int getId();
+        String getSignupid();
+    }
 }

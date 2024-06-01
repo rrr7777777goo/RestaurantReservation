@@ -17,6 +17,27 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReservationController {
     private final ReservationService reservationService;
+
+    @GetMapping("/get/owner")
+    @PreAuthorize("hasRole('OWNER')")
+    public ResponseEntity<?>  getReservationForOwner(Pageable pageable, @RequestParam String date) {
+        var result = this.reservationService.getReservationForDateAndLoginOwner(pageable, date);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/get/user")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?>  getReservationForUser(Pageable pageable, @RequestParam String date) {
+        var result = this.reservationService.getReservationForDateAndLoginUser(pageable, date);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/get/fromid")
+    @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
+    public ResponseEntity<?> getReservationFromId(@RequestParam int id) {
+        var result = this.reservationService.getFromId(id);
+        return ResponseEntity.ok(result);
+    }
     @PostMapping("/add")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> addReservation(@RequestBody ForRegisterReservation request) {
@@ -24,31 +45,24 @@ public class ReservationController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/approve")
+    @PutMapping("/approve")
     @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<?> reservationApprove(@RequestBody ForRequestReservation request) {
         var result = this.reservationService.approve_or_reject(request, ApproveStatus.RESERVATION_APPROVE);
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/reject")
+    @PutMapping("/reject")
     @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<?> reservationDeny(@RequestBody ForRequestReservation request) {
         var result = this.reservationService.approve_or_reject(request, ApproveStatus.RESERVATION_REJECT);
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/visit")
+    @PutMapping("/visit")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> reservationVisit(@RequestBody ForRequestReservation request) {
         var result = this.reservationService.visit(request);
-        return ResponseEntity.ok(result);
-    }
-
-    @GetMapping("/getForDate")
-    @PreAuthorize("hasRole('OWNER')")
-    public ResponseEntity<?>  getReservationForDate(Pageable pageable, @RequestParam String date) {
-        var result = this.reservationService.getReservationForDateAndLoginOwner(pageable, date);
         return ResponseEntity.ok(result);
     }
 }
