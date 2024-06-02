@@ -137,6 +137,10 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiU
 ### 특정 식당의 리뷰들을 최신순으로 조회
 GET http://localhost:8085/review/get/orderbytime?restaurantid=3
 
+### 리뷰 ID를 토대로 리뷰 정보를 조회 (리뷰 작성자, 리뷰를 작성한 식당 주인만 조회 가능)
+GET http://localhost:8085/review/get/fromid?id=1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyODk3NDYsImV4cCI6MTcxNzI5MTU0Nn0.5BqEvp9AwlxxeGj2-y9HOuWU4BiCIEzg8yVDJoXeEcFDEPoslVQYpAWl_MklVG47Zg8fPnc0V8Dz_mQyxYQ_Iw
+
 ###
 POST http://localhost:8085/review/add
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcwNjU1NzUsImV4cCI6MTcxNzA2NzM3NX0.ECelmzSletBM62lMTjutYx3kNgfd45FLTz59ygkJ7TD7HYVP6c3tkiigiAKyrEqONkGo-HZlku-EYAbD1JVH4g
@@ -155,6 +159,4 @@ Content-Type: application/json
 
 {
   "reviewid" : 1,
-  "score" : 4,
-  "description" : "리뷰 내용 수정"
 }

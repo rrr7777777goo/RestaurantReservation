@@ -80,10 +80,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
                     "where a.id = ?1")
     Optional<RestaurantInformationInterface> getRestaurantFromId(int id);
 
-    @Query("select a.id, a.ownerid \n" +
-            "from com.restaurantreservation.domain.restaurant.Restaurant as a \n" +
-            "where a.id = ?1 and a.ownerid = ?2")
-    Optional<Object> existsByIdAndOwnerid(int id, int ownerid);
-
     Optional<Restaurant> findAllById(int id);
+
+    Optional<Restaurant> findAllByIdAndOwnerid(int id, int ownerid);
 }

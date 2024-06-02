@@ -71,11 +71,11 @@ public class RestaurantService {
     }
 
     public Restaurant update(ForRequestRestaurant forRequestRestaurant) {
-        this.restaurantRepository.existsByIdAndOwnerid(forRequestRestaurant.getRestaurantid(), getIdInterface().getId())
+        Restaurant restaurant = this.restaurantRepository.findAllByIdAndOwnerid(forRequestRestaurant.getRestaurantid(), getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않거나 로그인한 계정에서 접근할 수 있는 권한이 없습니다."));
 
-        Restaurant restaurant = this.restaurantRepository.findAllById(forRequestRestaurant.getRestaurantid())
-                .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않습니다."));
+        //Restaurant restaurant = this.restaurantRepository.findAllById(forRequestRestaurant.getRestaurantid())
+        //        .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않습니다."));
 
         restaurant.updateRestaurant(forRequestRestaurant);
         var result = this.restaurantRepository.save(restaurant);
@@ -83,11 +83,11 @@ public class RestaurantService {
     }
 
     public String delete(ForRequestRestaurant forRequestRestaurant) {
-        this.restaurantRepository.existsByIdAndOwnerid(forRequestRestaurant.getRestaurantid(), getIdInterface().getId())
+        Restaurant restaurant = this.restaurantRepository.findAllByIdAndOwnerid(forRequestRestaurant.getRestaurantid(), getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않거나 로그인한 계정에서 접근할 수 있는 권한이 없습니다."));
 
-        var restaurant = this.restaurantRepository.findAllById(forRequestRestaurant.getRestaurantid())
-                .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않습니다."));
+        //var restaurant = this.restaurantRepository.findAllById(forRequestRestaurant.getRestaurantid())
+        //        .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않습니다."));
 
         this.restaurantRepository.delete(restaurant);
         return "Delete Complete " + restaurant.getId() + " : " + restaurant.getName();

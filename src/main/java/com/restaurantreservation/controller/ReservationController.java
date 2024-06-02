@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class ReservationController {
     private final ReservationService reservationService;
 
+
     @GetMapping("/get/owner")
     @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<?>  getReservationForOwner(Pageable pageable, @RequestParam String date) {

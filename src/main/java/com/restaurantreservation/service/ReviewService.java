@@ -28,6 +28,18 @@ public class ReviewService {
         return idInterface;
     }
 
+    public List<ReviewInformationInterface> getOrderByTime(Pageable pageable, int restaurantid) {
+        var result = this.reviewRepository.findAllByRestaurantIdOrderByTime(pageable, restaurantid).getContent();
+        return result;
+    }
+
+    public ReviewInformationInterface getFromid(int id) {
+        System.out.println("와우");
+        var result = this.reviewRepository.getReviewFromIdAndUserId(id, getIdInterface().getId())
+                .orElseThrow(() -> new RuntimeException("현재 리뷰 정보가 존재하지 않거나 로그인한 계정에서 리뷰정보를 확인할 수 있는 권한이 없습니다."));
+        return result;
+    }
+
     public Review register(ForRegisterReview forRegisterReview) {
         // 이미 리뷰가 작성되어 있는지 확인하기 위한 코드
         boolean exists = this.reviewRepository.existsByReservationid(forRegisterReview.getReservationid());
@@ -46,20 +58,19 @@ public class ReviewService {
 
     public Review update(ForRequestReview forRequestReview) {
         // 현재 계정에서 현재 예약정보에 대해 접근할 수 있는지 확인하기 위한 코드
-        this.reservationRepository.existsByReviewIdAndUserid(forRequestReview.getReviewid(), getIdInterface().getId())
-                .orElseThrow(() -> new RuntimeException("현재 예약 정보가 존재하지 않거나 로그인한 계정에서 접근할 수 있는 권한이 없습니다."));
-
-        // 아이디 기반 호출
-        Review review = this.reviewRepository.findAllById(forRequestReview.getReviewid())
-                .orElseThrow(() -> new RuntimeException("현재 예약 정보가 존재하지 않습니다."));
+        Review review = this.reviewRepository.getReviewForUpdateFromIdAndUserId(forRequestReview.getReviewid(), getIdInterface().getId())
+                .orElseThrow(() -> new RuntimeException("현재 리뷰 정보가 존재하지 않거나 로그인한 계정에서 접근할 수 있는 권한이 없습니다."));
 
         review.updateReview(forRequestReview);
         var result = this.reviewRepository.save(review);
         return result;
     }
 
-    public List<ReviewInformationInterface> getOrderByTime(Pageable pageable, int restaurantid) {
-        var result = this.reviewRepository.findAllByRestaurantIdOrderByTime(pageable, restaurantid).getContent();
-        return result;
+    public String delete(ForRequestReview forRequestReview) {
+        var review = this.reviewRepository.getReviewForDeleteFromIdAndUserId(forRequestReview.getReviewid(), getIdInterface().getId())
+                .orElseThrow(() -> new RuntimeException("현재 리뷰 정보가 존재하지 않거나 로그인한 계정에서 접근할 수 있는 권한이 없습니다."));
+
+        this.reviewRepository.delete(review);
+        return "Delete Complete " + review.getId();
     }
 }

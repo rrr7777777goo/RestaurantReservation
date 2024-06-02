@@ -23,6 +23,13 @@ public class ReviewController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/get/fromid")
+    @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
+    public ResponseEntity<?> getReviewFromId(@RequestParam int id) {
+        var result = this.reviewService.getFromid(id);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping("/add")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> addRestaurant(@RequestBody ForRegisterReview request) {
@@ -34,12 +41,13 @@ public class ReviewController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> updateRestaurant(@RequestBody ForRequestReview request) {
         var result = this.reviewService.update(request);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/delete")
     @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
-    public ResponseEntity<?> deleteRestaurant(@RequestBody ForRegisterReview request) {
-        return ResponseEntity.ok("");
+    public ResponseEntity<?> deleteRestaurant(@RequestBody ForRequestReview request) {
+        var result = this.reviewService.delete(request);
+        return ResponseEntity.ok(result);
     }
 }

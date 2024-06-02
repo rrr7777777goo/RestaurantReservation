@@ -42,10 +42,4 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     Optional<Reservation> findAllByIdAndUserid(int id, int userid);
 
-    @Query("select b.id as reviewid, a.userid as userid \n" +
-             "from com.restaurantreservation.domain.reservation.Reservation as a, " +
-            "com.restaurantreservation.domain.review.Review as b\n" +
-            "where a.id = b.reservationid and b.id = ?1 and a.userid = ?2")
-    Optional<Object> existsByReviewIdAndUserid(int reviewid, int userid);
-
 }
