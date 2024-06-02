@@ -158,5 +158,5 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiU
 Content-Type: application/json
 
 {
-  "reviewid" : 1,
+  "reviewid" : 1
 }
