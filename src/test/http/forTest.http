@@ -1,3 +1,4 @@
+
 ### 회원가입
 ### signupid : 로그인 아이디 (6자리 이상, 20자리 이하)
 ### password : 로그인 비밀번호 (8자리 이상, 20자리 이하)
@@ -6,157 +7,184 @@ POST http://localhost:8085/auth/signup
 Content-Type: application/json
 
 {
-  "signupid": "grace21",
-  "password": "grace1123!@",
-  "roles": ["ROLE_USER", "ROLE_USER","ROLE_OWNER"]
+  "signupid": "user005",
+  "password": "cccccccc",
+  "roles": ["ROLE_USER"]
 }
 
 ### 로그인
 ### signupid : 로그인 아이디
 ### password : 로그인 비밀번호
-### 정상적으로 실행하고 나면 jwt(json web token)이 발급된다. 이 jwt을 'Authorization: Bearer '옆에 붙이면 된다.
+### 정상적으로 로그인을 성공하면 jwt(json web token)이 발급된다. 이 jwt을 쓰려면 헤더에서 'Authorization: Bearer '옆에 붙이면 된다.
+### 토큰 유효시간 : 약 30분
 POST http://localhost:8085/auth/signin
 Content-Type: application/json
 
 {
-  "signupid": "grace21",
-  "password": "grace1123!@"
+  "signupid": "owner001",
+  "password": "12345678"
 }
+
+
+### (로그인 필요 X) 식당 목록 이름순으로 조회, keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
+GET http://localhost:8085/restaurant/get/orderbyname?size=10&page=0
+
+### (로그인 필요 X) 식당 목록 리뷰점수 높은 순서대로 조회, keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
+GET http://localhost:8085/restaurant/get/orderbyreviewscore?size=10&page=0
+
+### (로그인 필요 X) 식당 목록 입력한 위치와 가까운 순서대로 조회, keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
+GET http://localhost:8085/restaurant/get/orderbylength?size=10&page=0&lat=0.0&lnt=0.0
+
+
+### (ROLE_OWNER 권한이 있을 때 가능) 식당 주인이 관리하는 식당 목록 이름순으로 조회
+### keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
+GET http://localhost:8085/restaurant/get/orderbyname/owner?size=10&page=0
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMiIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3MzgxNDIxLCJleHAiOjE3MTczODMyMjF9.EeI2AFR1gCMTdHBfgc-CfNGeghu-7Jya0nj5ZbhhjAgrJQ7at2ETUGbIFQS7bxaUvAmH4cF2Yw2Glb97kAEgUA
+
+### (ROLE_OWNER 권한이 있을 때 가능) 식당 주인이 관리하는 식당 목록 리뷰점수 높은 순서대로 조회
+### keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
+GET http://localhost:8085/restaurant/get/orderbyreviewscore/owner?size=10&page=0
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMyIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3MzgxNTkxLCJleHAiOjE3MTczODMzOTF9.12CQh6gSVy7PepCg7Eo88tJl-ZMJSbW4nw4-MxfKUzIk5k1-mAcVQHQKN1uAPJtOCaNClUdcYUTVef3WEDwLCA
+
+### (ROLE_OWNER 권한이 있을 때 가능) 식당 주인이 관리하는 식당 목록 입력한 위치와 가까운 순서대로 조회
+### keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
+GET http://localhost:8085/restaurant/get/orderbylength/owner?size=10&page=0&lat=34.0&lnt=34.0
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMiIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3MzgxNDIxLCJleHAiOjE3MTczODMyMjF9.EeI2AFR1gCMTdHBfgc-CfNGeghu-7Jya0nj5ZbhhjAgrJQ7at2ETUGbIFQS7bxaUvAmH4cF2Yw2Glb97kAEgUA
+
+
+### (로그인 했을 경우에 가능) 식당 ID를 토대로 식당 정보 출력
+GET http://localhost:8085/restaurant/get/fromid?id=12
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMiIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3MzgxNDIxLCJleHAiOjE3MTczODMyMjF9.EeI2AFR1gCMTdHBfgc-CfNGeghu-7Jya0nj5ZbhhjAgrJQ7at2ETUGbIFQS7bxaUvAmH4cF2Yw2Glb97kAEgUA
 
 ### 식당 등록 (ROLE_OWNER 권한이 있을 경우에 가능)
 POST http://localhost:8085/restaurant/add
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyMjQzNDksImV4cCI6MTcxNzIyNjE0OX0.7wUEueyxwzVwURozH2PNQp6JG9jun9uHnRmXG7yg2zSycENHL9gTCSTw_tVxpcM4pTOQMfgiQgmWWl-Bsqk0UA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMiIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3MzgxNDIxLCJleHAiOjE3MTczODMyMjF9.EeI2AFR1gCMTdHBfgc-CfNGeghu-7Jya0nj5ZbhhjAgrJQ7at2ETUGbIFQS7bxaUvAmH4cF2Yw2Glb97kAEgUA
 Content-Type: application/json
 
 {
-  "name" : "이히히",
-  "address" : "ㅁㅁㅁ동 ㅁㅁ번지",
-  "description" : "식당에 대한 설명입니다.",
-  "lat" : 52.33,
-  "lnt" : 35.22
+  "name" : "식당 3호",
+  "address" : "3호",
+  "description" : "3호",
+  "lat" : 3.33,
+  "lnt" : 33.0003
 }
 
 ### 식당 정보 변경 (ROLE_OWNER 권한이 있을 경우에 가능, 자신이 등록한 식당의 정보만 변경 가능)
 PUT http://localhost:8085/restaurant/update
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyMjQzNDksImV4cCI6MTcxNzIyNjE0OX0.7wUEueyxwzVwURozH2PNQp6JG9jun9uHnRmXG7yg2zSycENHL9gTCSTw_tVxpcM4pTOQMfgiQgmWWl-Bsqk0UA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMyIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3MzgxNzAyLCJleHAiOjE3MTczODM1MDJ9.8adpcQs9dTHPggQ_FU1ddkqYFKt4UbWP9iiFSfdaghec3EdhkIXLo0OXLb6KYoKcXM2I67Jlf4Tp_Ndk1QLfgg
 Content-Type: application/json
 
 {
-  "restaurantid" : 11,
-  "name" : "이히히",
-  "address" : "ㅁㅁㅁ동 ㅁㅁ번지",
-  "description" : "식당에 대한 설명입니다.",
-  "lat" : 52.33,
-  "lnt" : 35.22
+  "restaurantid" : 18,
+  "name" : "식당 3호",
+  "address" : "3333333333",
+  "description" : "3호",
+  "lat" : 33.33,
+  "lnt" : 33.003
 }
 
 ### 식당 정보 삭제 (ROLE_OWNER 권한이 있을 경우에 가능, 자신이 등록한 식당의 정보만 삭제 가능)
 DELETE http://localhost:8085/restaurant/delete
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyMjQzNDksImV4cCI6MTcxNzIyNjE0OX0.7wUEueyxwzVwURozH2PNQp6JG9jun9uHnRmXG7yg2zSycENHL9gTCSTw_tVxpcM4pTOQMfgiQgmWWl-Bsqk0UA
+Authorization: Bearer
 Content-Type: application/json
 
 {
-  "restaurantid" : 11
+  "restaurantid" : 13
 }
 
-### 식당 목록 이름순으로 조회, keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
-GET http://localhost:8085/restaurant/getOrderByName?size=10&page=0
 
-### 식당 목록 리뷰점수 높은 순서대로 조회, keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
-GET http://localhost:8085/restaurant/getOrderByReviewScore?size=10&page=0
 
-### 식당 목록 입력한 위치와 가까운 순서대로 조회, keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
-GET http://localhost:8085/restaurant/getOrderByLength?size=10&page=0&lat=0.0
 
-### 식당 주인이 관리하는 식당 목록 이름순으로 조회, keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
-GET http://localhost:8085/restaurant/getOrderByNameForOwner?size=10&page=0
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYWFhYWEiLCJyb2xlcyI6WyJST0xFX09XTkVSIiwiUk9MRV9VU0VSIl0sImlhdCI6MTcxNzIyMjIzMSwiZXhwIjoxNzE3MjI0MDMxfQ.QYcStyruSuG2Utm6kQn3bJoFyLc3EfVQD8Yb3AoiatcVKF6-jWo_nnQHJ93Wovprh0QC1JTkhiMJ8tfzyWFfxA
+### 현재 로그인한 상점 주인의 상점들에 걸린 예약 정보들을 조회 (ROLE_OWNER 권한이 있을 경우에 가능, 시간 순으로 정렬)
+GET http://localhost:8085/reservation/get/owner?size=10&page=0&date=2024-06-03
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMSIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3MzkzNTE0LCJleHAiOjE3MTczOTUzMTR9.-i6W8kyu9MDSMYrnIi5zZcLvy4Z-kKLES4bOyzepwoNyKDCcCur5GBxqNHm-9kokn8tWFXlGvjdFmHTZO0Ni4A
 
-### 식당 주인이 관리하는 식당 목록 리뷰점수 높은 순서대로 조회, keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
-GET http://localhost:8085/restaurant/getOrderByReviewScoreForOwner?size=10&page=0&keyword=하
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYWFhYWEiLCJyb2xlcyI6WyJST0xFX09XTkVSIiwiUk9MRV9VU0VSIl0sImlhdCI6MTcxNzIyMjIzMSwiZXhwIjoxNzE3MjI0MDMxfQ.QYcStyruSuG2Utm6kQn3bJoFyLc3EfVQD8Yb3AoiatcVKF6-jWo_nnQHJ93Wovprh0QC1JTkhiMJ8tfzyWFfxA
-
-### 식당 주인이 관리하는 식당 목록 입력한 위치와 가까운 순서대로 조회, keyword 파라미터를 추가하면 해당 문장으로 시작하는 식당 이름들만 조회 가능
-GET http://localhost:8085/restaurant/getOrderByLengthForOwner?size=10&page=0&lat=0.0&lnt=0.0
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYWFhYWEiLCJyb2xlcyI6WyJST0xFX09XTkVSIiwiUk9MRV9VU0VSIl0sImlhdCI6MTcxNzIyMjIzMSwiZXhwIjoxNzE3MjI0MDMxfQ.QYcStyruSuG2Utm6kQn3bJoFyLc3EfVQD8Yb3AoiatcVKF6-jWo_nnQHJ93Wovprh0QC1JTkhiMJ8tfzyWFfxA
-
-### 식당 ID를 토대로 식당 정보 출력 (로그인 했을 경우에 가능)
-GET http://localhost:8085/restaurant/getFromId?id=3
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyNTE4MTEsImV4cCI6MTcxNzI1MzYxMX0.XB2ULZ2Nu9F_UmwOh8P7fClJjuBcpFUGR8C9TDwHEvi08n-2qwE1LUoyZ9-ZXdsYWjsnoFmOJ7TmyupkGO4Hfw
-
-### 식당 예약 신청 (예약은 현재 시간보다 3시간 이후, 75시간 이내로 가능)
-POST http://localhost:8085/reservation/add
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyMjY5NzIsImV4cCI6MTcxNzIyODc3Mn0.7UTAilnA2Uv32sb3QV1NEJlUmJqsubzk8fuBVTlsqkz-lCRQGwsX1NX2oPe7a3l1NA9EScmPbiTlFONrQOz9Hg
-Content-Type: application/json
-
-{
-  "restaurantid" : 10,
-  "reservationtime" : "2024-06-31T22:59:59",
-  "phonenumber" : "010-0000-0000"
-}
-
-### 예약 요청 승인 (ROLE_OWNER 권한이 있을 경우에 가능)
-PUT http://localhost:8085/reservation/approve
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcxNDEzODIsImV4cCI6MTcxNzE0MzE4Mn0.afr6Pd9vs4o-4h2y1hys4Q-7bvA-mEGlsWSQJ4nIA7G9eHgv8oyl-PIyvOAV4fC57BNY71T8XxA5KU8JUqYajw
-Content-Type: application/json
-
-{
-  "reservationid" : 10
-}
-
-### 예약 요청 거부 (ROLE_OWNER 권한이 있을 경우에 가능)
-PUT http://localhost:8085/reservation/reject
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcxNDEzODIsImV4cCI6MTcxNzE0MzE4Mn0.afr6Pd9vs4o-4h2y1hys4Q-7bvA-mEGlsWSQJ4nIA7G9eHgv8oyl-PIyvOAV4fC57BNY71T8XxA5KU8JUqYajw
-Content-Type: application/json
-
-{
-  "reservationid" : 10
-}
-
-### 예약 방문 확인 (ROLE_USER 권한이 있을 경우에 가능)
-PUT http://localhost:8085/reservation/visit
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcwNTI1NzgsImV4cCI6MTcxNzA1NDM3OH0.9Iq2gQqrcTbcAZgpmf6dgASSeH8ekyoDpiQsJgBRM1Q2M_UMdbOnyoWqlwWY08cGnu3yVKLjuW301EEWP9YY7A
-Content-Type: application/json
-
-{
-  "reservationid" : 8
-}
-
-### 현재 로그인한 상점 주인의 상점들에 걸린 예약 정보들을 조회 (시간 순으로 정렬)
-GET http://localhost:8085/reservation/get/owner?size=10&page=0&date=2024-04-30
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyNTQ2NzAsImV4cCI6MTcxNzI1NjQ3MH0.MbJDJzEle9OBEA1vofq_AfWkp5lCBEakWBxQGLWqMCR6dyfvJhFRIEkFn1Jms8bQNolM9V6yLO5HFRJ8rMM1JQ
-
-### 현재 로그인한 유저의 예약 정보들을 조회 (시간 순으로 정렬)
-GET http://localhost:8085/reservation/get/user?size=10&page=0&date=2024-04-30
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyNTcyMzYsImV4cCI6MTcxNzI1OTAzNn0.NTh5MmmVWc4yZLQhCV0q3CgfqOm78Erhdth3USa6cD9QeOlhcIf4B1AJ6HHFqJbl6jHobLawZbT0BHU2QNWTpg
+### 현재 로그인한 유저의 예약 정보들을 조회 (ROLE_USER 권한이 있을 경우에 가능, 시간 순으로 정렬)
+GET http://localhost:8085/reservation/get/user?size=10&page=0&date=2024-06-03
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDAyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTcxNzM5MzMwMywiZXhwIjoxNzE3Mzk1MTAzfQ.sagUzUoSgshBYlCaQkbHZNl0EBCMAOMNUL61lKkssh8z4KI0dsXJbYIDVtnOpW5GoOzgG5AYBNv7cyetADAjqg
 
 ### 예약 ID를 토대로 예약 정보를 조회 (예약자, 예약한 식당 주인만 조회 가능)
-GET http://localhost:8085/reservation/get/fromid?id=9
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyNTcyMzYsImV4cCI6MTcxNzI1OTAzNn0.NTh5MmmVWc4yZLQhCV0q3CgfqOm78Erhdth3USa6cD9QeOlhcIf4B1AJ6HHFqJbl6jHobLawZbT0BHU2QNWTpg
+GET http://localhost:8085/reservation/get/fromid?id=14
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDAyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTcxNzM5MzMwMywiZXhwIjoxNzE3Mzk1MTAzfQ.sagUzUoSgshBYlCaQkbHZNl0EBCMAOMNUL61lKkssh8z4KI0dsXJbYIDVtnOpW5GoOzgG5AYBNv7cyetADAjqg
+
+
+
+
+### 예약 신청 (ROLE_USER 권한이 있을 경우에 가능, 예약은 현재 시간보다 3시간 이후, 75시간 이내로 가능)
+POST http://localhost:8085/reservation/add
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDAyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTcxNzM5MzMwMywiZXhwIjoxNzE3Mzk1MTAzfQ.sagUzUoSgshBYlCaQkbHZNl0EBCMAOMNUL61lKkssh8z4KI0dsXJbYIDVtnOpW5GoOzgG5AYBNv7cyetADAjqg
+Content-Type: application/json
+
+{
+  "restaurantid" : 12,
+  "reservationtime" : "2024-06-03T19:20:00",
+  "phonenumber" : "010-0222-0333"
+}
+
+### 예약 승인 (ROLE_OWNER 권한이 있을 경우에 가능, 승인은 로그인 한 유저가 해당 식당의 주인일 때, 예약이 요청상태일 때 가능)
+PUT http://localhost:8085/reservation/approve
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMSIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3MzkzNTE0LCJleHAiOjE3MTczOTUzMTR9.-i6W8kyu9MDSMYrnIi5zZcLvy4Z-kKLES4bOyzepwoNyKDCcCur5GBxqNHm-9kokn8tWFXlGvjdFmHTZO0Ni4A
+Content-Type: application/json
+
+{
+  "reservationid" : 13
+}
+
+### 예약 거부 (ROLE_OWNER 권한이 있을 경우에 가능, 거부는 로그인 한 유저가 해당 식당의 주인일 때, 예약이 거부상태일 때만 가능)
+PUT http://localhost:8085/reservation/reject
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMSIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3MzkzNTE0LCJleHAiOjE3MTczOTUzMTR9.-i6W8kyu9MDSMYrnIi5zZcLvy4Z-kKLES4bOyzepwoNyKDCcCur5GBxqNHm-9kokn8tWFXlGvjdFmHTZO0Ni4A
+Content-Type: application/json
+
+{
+  "reservationid" : 14
+}
+
+### 예약 방문 확인 (ROLE_USER 권한이 있을 경우에 가능, 방문 확인은 예약이 승인이 된 후 예약시간 1시간 전부터 10분전까지 일 때 가능)
+PUT http://localhost:8085/reservation/visit
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDAxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTcxNzM5MzU4OSwiZXhwIjoxNzE3Mzk1Mzg5fQ.SJZf1ta85CA_SbZxzIfLaIxp61VASRbgLlWSrY67XG1xdC9SxSqMkW029KX7zI0SQePTSzilBfx3W4yX3YNQNw
+Content-Type: application/json
+
+{
+  "reservationid" : 13
+}
+
+
+
 
 ### 특정 식당의 리뷰들을 최신순으로 조회
-GET http://localhost:8085/review/get/orderbytime?restaurantid=3
+GET http://localhost:8085/review/get/orderbytime?restaurantid=12
 
 ### 리뷰 ID를 토대로 리뷰 정보를 조회 (리뷰 작성자, 리뷰를 작성한 식당 주인만 조회 가능)
 GET http://localhost:8085/review/get/fromid?id=1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcyODk3NDYsImV4cCI6MTcxNzI5MTU0Nn0.5BqEvp9AwlxxeGj2-y9HOuWU4BiCIEzg8yVDJoXeEcFDEPoslVQYpAWl_MklVG47Zg8fPnc0V8Dz_mQyxYQ_Iw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMSIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3MzgwNTIwLCJleHAiOjE3MTczODIzMjB9.miN8u0rg0919ZcST82uQXuHzIogbK0R8Nv5edKwjM91PdtQPQlOgFsxejDRZk0wQBnounJ82-F7elSNHHuQ2gw
 
-###
+### 예약 ID를 토대로 리뷰 작성 (ROLE_USER 권한이 있을 경우에 가능, 예약을 했던 사람만 해당 ID로 작성 가능, 예약 하나당 리뷰 한개만 작성 가능, 리뷰는 예약 방문 확인 이후 작성 가능)
 POST http://localhost:8085/review/add
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcwNjU1NzUsImV4cCI6MTcxNzA2NzM3NX0.ECelmzSletBM62lMTjutYx3kNgfd45FLTz59ygkJ7TD7HYVP6c3tkiigiAKyrEqONkGo-HZlku-EYAbD1JVH4g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDAxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTcxNzM5NDI2MCwiZXhwIjoxNzE3Mzk2MDYwfQ.r6n4-RcCCRI37ZyRVe2cyuNkvA6L5LownIPbwr4ZtYFNI-GZwmxYqK9YqUiYxWLNDEFpa1ZF0_SxTaBjGq677g
 Content-Type: application/json
 
 {
-  "reservationid" : 9,
-  "score" : 4,
-  "description" : "리뷰 내용 작성"
+  "reservationid" : 13,
+  "score" : 5,
+  "description" : "리뷰입니다."
 }
 
-###
+### 리뷰 ID를 토대로 리뷰 수정 (ROLE_USER 권한이 있을 경우에 가능, 리뷰를 작성했던 사람만 해당 ID로 수정 가능)
 PUT http://localhost:8085/review/update
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZTIxIiwicm9sZXMiOlsiUk9MRV9PV05FUiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE3MTcwNjc1MTQsImV4cCI6MTcxNzA2OTMxNH0.Ex37iBpA2f5uXJQMmu4RYlZDY-Eh5t7liEuv91t11zjFT5T9ojutO86psHaPicYvXcOoTvQ2KKgCLBwESjnQqA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDAxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTcxNzM5NDI2MCwiZXhwIjoxNzE3Mzk2MDYwfQ.r6n4-RcCCRI37ZyRVe2cyuNkvA6L5LownIPbwr4ZtYFNI-GZwmxYqK9YqUiYxWLNDEFpa1ZF0_SxTaBjGq677g
 Content-Type: application/json
 
 {
-  "reviewid" : 1
+  "reviewid" : 6,
+  "score" : 5,
+  "description" : "리뷰 수정합니다."
+}
+
+### 리뷰 ID를 토대로 리뷰 삭제 (리뷰를 작성했던 사람과 리뷰를 작성한 식당 주인만 해당 ID로 삭제 가능)
+DELETE http://localhost:8085/review/delete
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvd25lcjAwMSIsInJvbGVzIjpbIlJPTEVfT1dORVIiXSwiaWF0IjoxNzE3Mzk0Njg2LCJleHAiOjE3MTczOTY0ODZ9.AhkJG_-Cg82WFsofuBvZvJfkVydXoGEGgRzBBn_7-xzlTvT8r73wSd-QCSc0gDlapCQ82-R0M4Uyit-185sbyQ
+Content-Type: application/json
+
+{
+  "reviewid" : 7
 }

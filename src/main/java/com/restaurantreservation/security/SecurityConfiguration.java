@@ -35,7 +35,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(request -> request.requestMatchers(
                     "/auth/signup",
                     "/auth/signin",
-                    "restaurant/get/orderbytime",
+                    "restaurant/get/orderbyname",
                     "restaurant/get/orderbyreviewscore",
                     "restaurant/get/orderbylength",
                     "review/get/orderbytime"

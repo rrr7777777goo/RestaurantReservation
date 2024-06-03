@@ -60,8 +60,13 @@ public class RestaurantService {
     }
 
     public RestaurantInformationInterface getFromId(int id) {
-        var restaurant = this.restaurantRepository.getRestaurantFromId(id)
+        // 리뷰점수 평균값이 null이면 0을 반환하도록 설정되어 있어서 작동되지 않기 때문에 밑에서 따로 null값 조사하도록 구현
+        RestaurantInformationInterface restaurant = this.restaurantRepository.getRestaurantFromId(id)
                 .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않습니다."));
+
+        if(restaurant.getId() == null) {
+            throw new RuntimeException("현재 식당 정보가 존재하지 않습니다.");
+        }
         return restaurant;
     }
 
@@ -74,9 +79,6 @@ public class RestaurantService {
         Restaurant restaurant = this.restaurantRepository.findAllByIdAndOwnerid(forRequestRestaurant.getRestaurantid(), getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않거나 로그인한 계정에서 접근할 수 있는 권한이 없습니다."));
 
-        //Restaurant restaurant = this.restaurantRepository.findAllById(forRequestRestaurant.getRestaurantid())
-        //        .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않습니다."));
-
         restaurant.updateRestaurant(forRequestRestaurant);
         var result = this.restaurantRepository.save(restaurant);
         return result;
@@ -85,9 +87,6 @@ public class RestaurantService {
     public String delete(ForRequestRestaurant forRequestRestaurant) {
         Restaurant restaurant = this.restaurantRepository.findAllByIdAndOwnerid(forRequestRestaurant.getRestaurantid(), getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않거나 로그인한 계정에서 접근할 수 있는 권한이 없습니다."));
-
-        //var restaurant = this.restaurantRepository.findAllById(forRequestRestaurant.getRestaurantid())
-        //        .orElseThrow(() -> new RuntimeException("현재 식당 정보가 존재하지 않습니다."));
 
         this.restaurantRepository.delete(restaurant);
         return "Delete Complete " + restaurant.getId() + " : " + restaurant.getName();

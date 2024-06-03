@@ -11,11 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
-    boolean existsById(int id);
-
     boolean existsByReservationid(int reservationid);
-
-    Optional<Review> findAllById(int id);
 
     @Query(value="select a.id as id, a.reviewtime as reviewtime, a.score as score, a.description as description \n" +
             " from com.restaurantreservation.domain.review.Review as a, \n" +

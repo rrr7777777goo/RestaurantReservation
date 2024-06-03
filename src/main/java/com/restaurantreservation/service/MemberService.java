@@ -45,7 +45,7 @@ public class MemberService {
 
     public Auth.IdInterface loadUserBySignupid(String signupid) {
         return this.memberRepository.findidBySignupid(signupid)
-                .orElseThrow(() -> new UsernameNotFoundException("couldn't find user ->" + signupid));
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 ID입니다. -> " + signupid));
     }
 
     public Member authenticate(Auth.SignIn member) {
@@ -57,17 +57,5 @@ public class MemberService {
         }
 
         return user;
-    }
-
-    public void yopyop() {
-        // Member signinMember = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 로그인 ID 추출
-
-        Collection<? extends GrantedAuthority> xx = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        for(GrantedAuthority z : xx) {
-            System.out.println(z);
-            System.out.println(z.getAuthority());
-        }
-        System.out.println(username);
     }
 }

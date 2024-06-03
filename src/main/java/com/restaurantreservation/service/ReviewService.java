@@ -7,6 +7,7 @@ import com.restaurantreservation.domain.review.ForRequestReview;
 import com.restaurantreservation.domain.review.Review;
 import com.restaurantreservation.domain.review.ReviewInformationInterface;
 import com.restaurantreservation.repository.ReservationRepository;
+import com.restaurantreservation.repository.RestaurantRepository;
 import com.restaurantreservation.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ReviewService {
+    private final RestaurantRepository restaurantRepository;
     private final ReservationRepository reservationRepository;
     private final ReviewRepository reviewRepository;
 
@@ -29,12 +31,15 @@ public class ReviewService {
     }
 
     public List<ReviewInformationInterface> getOrderByTime(Pageable pageable, int restaurantid) {
+        if(!this.restaurantRepository.existsAllById(restaurantid)) {
+            throw new RuntimeException("현재 식당 정보가 존재하지 않습니다.");
+        }
+
         var result = this.reviewRepository.findAllByRestaurantIdOrderByTime(pageable, restaurantid).getContent();
         return result;
     }
 
     public ReviewInformationInterface getFromid(int id) {
-        System.out.println("와우");
         var result = this.reviewRepository.getReviewFromIdAndUserId(id, getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 리뷰 정보가 존재하지 않거나 로그인한 계정에서 리뷰정보를 확인할 수 있는 권한이 없습니다."));
         return result;
@@ -57,7 +62,6 @@ public class ReviewService {
     }
 
     public Review update(ForRequestReview forRequestReview) {
-        // 현재 계정에서 현재 예약정보에 대해 접근할 수 있는지 확인하기 위한 코드
         Review review = this.reviewRepository.getReviewForUpdateFromIdAndUserId(forRequestReview.getReviewid(), getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 리뷰 정보가 존재하지 않거나 로그인한 계정에서 접근할 수 있는 권한이 없습니다."));
 

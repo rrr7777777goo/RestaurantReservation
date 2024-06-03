@@ -73,14 +73,14 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     Page<RestaurantInformationInterface> findAllOrderByLengthForOwner(Pageable pageable, String keyword, int ownerid, double lat, double lnt);
 
     @Query(value=
-            "select a.id as id, a.name as name, a.address as address, a.description as description, a.lat as lat , a.lnt as lnt, (ifnull(avg(c.score), 0)) as reviewscore\n" +
+            "select a.id as id, a.name as name, a.address as address, a.description as description, a.lat as lat , a.lnt as lnt, (ifnull(avg(c.score), 0)) as reviewscore \n" +
                     "from com.restaurantreservation.domain.restaurant.Restaurant as a \n" +
                     "left join com.restaurantreservation.domain.reservation.Reservation as b on a.id = b.restaurantid \n" +
                     "left join com.restaurantreservation.domain.review.Review as c on b.id = c.reservationid\n" +
                     "where a.id = ?1")
     Optional<RestaurantInformationInterface> getRestaurantFromId(int id);
 
-    Optional<Restaurant> findAllById(int id);
-
     Optional<Restaurant> findAllByIdAndOwnerid(int id, int ownerid);
+
+    boolean existsAllById(int id);
 }
