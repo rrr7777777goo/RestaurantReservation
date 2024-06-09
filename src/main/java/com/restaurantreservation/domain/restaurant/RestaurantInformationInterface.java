@@ -1,5 +1,6 @@
 package com.restaurantreservation.domain.restaurant;
 
+// 식당 관련 정보들을 반환할 때 사용하는 인터페이스
 public interface RestaurantInformationInterface {
     // 식당 아이디
     Integer getId();
