@@ -8,8 +8,8 @@ import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 public interface ReviewInformationInterface {
-    Integer getId();
-    LocalDateTime getReviewtime();
-    Integer getScore();
-    String getDescription();
+    Integer getId(); // 현재 리뷰 아이디
+    LocalDateTime getReviewtime(); // 리뷰 작성 시간
+    Integer getScore(); // 리뷰 점수
+    String getDescription(); // 리뷰 설명
 }

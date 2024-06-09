@@ -25,11 +25,13 @@ public class ReviewService {
     private final ReservationRepository reservationRepository;
     private final ReviewRepository reviewRepository;
 
+    // 현재 로그인한 사람의 아이디 관련 정보를 가져오는 함수
     private Auth.IdInterface getIdInterface() {
         Auth.IdInterface idInterface = (Auth.IdInterface) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return idInterface;
     }
 
+    // 최신순으로 특정 식당의 리뷰들을 가져온다.
     public List<ReviewInformationInterface> getOrderByTime(Pageable pageable, int restaurantid) {
         if(!this.restaurantRepository.existsAllById(restaurantid)) {
             throw new RuntimeException("현재 식당 정보가 존재하지 않습니다.");
@@ -39,12 +41,14 @@ public class ReviewService {
         return result;
     }
 
+    // 리뷰 아이디를 기반으로 리뷰 정보를 가져온다.
     public ReviewInformationInterface getFromid(int id) {
         var result = this.reviewRepository.getReviewFromIdAndUserId(id, getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 리뷰 정보가 존재하지 않거나 로그인한 계정에서 리뷰정보를 확인할 수 있는 권한이 없습니다."));
         return result;
     }
 
+    // 리뷰 등록
     public Review register(ForRegisterReview forRegisterReview) {
         // 이미 리뷰가 작성되어 있는지 확인하기 위한 코드
         boolean exists = this.reviewRepository.existsByReservationid(forRegisterReview.getReservationid());
@@ -61,6 +65,7 @@ public class ReviewService {
         return result;
     }
 
+    // 리뷰 수정
     public Review update(ForRequestReview forRequestReview) {
         Review review = this.reviewRepository.getReviewForUpdateFromIdAndUserId(forRequestReview.getReviewid(), getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 리뷰 정보가 존재하지 않거나 로그인한 계정에서 접근할 수 있는 권한이 없습니다."));
@@ -70,6 +75,7 @@ public class ReviewService {
         return result;
     }
 
+    // 리뷰 삭제
     public String delete(ForRequestReview forRequestReview) {
         var review = this.reviewRepository.getReviewForDeleteFromIdAndUserId(forRequestReview.getReviewid(), getIdInterface().getId())
                 .orElseThrow(() -> new RuntimeException("현재 리뷰 정보가 존재하지 않거나 로그인한 계정에서 접근할 수 있는 권한이 없습니다."));

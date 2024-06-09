@@ -30,6 +30,7 @@ public class Review {
     // 리뷰 내용
     private String description;
 
+    // 리뷰 수정용 함수
     public void updateReview(ForRequestReview forRequestReview) {
         if(this.id == forRequestReview.getReviewid()) {
             this.reviewtime = LocalDateTime.now();
