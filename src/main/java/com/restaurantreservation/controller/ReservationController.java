@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class ReservationController {
     private final ReservationService reservationService;
 
-
+    // 식당 주인이 특정 날짜에 자신에게 들어온 예약 정보들을 얻기 위해 사용
     @GetMapping("/get/owner")
     @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<?>  getReservationForOwner(Pageable pageable, @RequestParam String date) {
@@ -26,6 +26,7 @@ public class ReservationController {
         return ResponseEntity.ok(result);
     }
 
+    // 사용자가 특정 날짜에 자신이 신청한 예약 정보들을 얻기 위해 사용
     @GetMapping("/get/user")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?>  getReservationForUser(Pageable pageable, @RequestParam String date) {
@@ -33,12 +34,15 @@ public class ReservationController {
         return ResponseEntity.ok(result);
     }
 
+    // 아이디를 기반으로 예약 정보를 얻기 위해 사용
     @GetMapping("/get/fromid")
     @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
     public ResponseEntity<?> getReservationFromId(@RequestParam int id) {
         var result = this.reservationService.getFromId(id);
         return ResponseEntity.ok(result);
     }
+
+    // 새로 예약 정보를 등록할 때 사용
     @PostMapping("/add")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> addReservation(@RequestBody ForRegisterReservation request) {
@@ -46,6 +50,7 @@ public class ReservationController {
         return ResponseEntity.ok(result);
     }
 
+    // 예약 정보를 승인할 때 사용
     @PutMapping("/approve")
     @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<?> reservationApprove(@RequestBody ForRequestReservation request) {
@@ -53,6 +58,7 @@ public class ReservationController {
         return ResponseEntity.ok(result);
     }
 
+    // 예약 정보를 거부할 때 사용
     @PutMapping("/reject")
     @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<?> reservationDeny(@RequestBody ForRequestReservation request) {
@@ -60,6 +66,7 @@ public class ReservationController {
         return ResponseEntity.ok(result);
     }
 
+    // 예약 방문 처리를 할 때 사용
     @PutMapping("/visit")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> reservationVisit(@RequestBody ForRequestReservation request) {

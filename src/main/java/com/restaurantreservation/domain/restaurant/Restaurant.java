@@ -15,7 +15,7 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    // 점장 아이디
+    // 주인 아이디
     @Column(name = "owner_id")
     private int ownerid;
 

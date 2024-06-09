@@ -2,7 +2,6 @@ package com.restaurantreservation.domain.reservation;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -40,21 +39,23 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private VisitStatus visitstatus;
 
-
+    // 예약 승인용 함수
     public void approveReservation() {
         if(this.approvestatus != ApproveStatus.RESERVATRION_REQUEST) {
             throw new RuntimeException("이미 승인이나 거부 처리가 완료된 예약은 다시 승인 할 수 없습니다.");
         }
         this.approvestatus = ApproveStatus.RESERVATION_APPROVE;
     }
-
+    
+    // 예약 거부용 함수
     public void rejectReservation() {
         if(this.approvestatus != ApproveStatus.RESERVATRION_REQUEST) {
             throw new RuntimeException("이미 승인이나 거부 처리가 완료된 예약은 다시 승인 할 수 없습니다.");
         }
         this.approvestatus = ApproveStatus.RESERVATION_REJECT;
     }
-
+    
+    // 예약 방문 처리용 함수
     public void visitReservation() {
         switch(this.approvestatus) {
             case RESERVATRION_REQUEST:
@@ -80,6 +81,7 @@ public class Reservation {
         this.visitstatus = VisitStatus.VISIT;
     }
 
+    // 해당 예약정보를 기반으로 리뷰를 작성하기 전에 작성이 가능한 상태인지 아닌지 확인하는 용도
     public void checkBeforeReview() {
         switch(this.approvestatus) {
             case RESERVATRION_REQUEST:
