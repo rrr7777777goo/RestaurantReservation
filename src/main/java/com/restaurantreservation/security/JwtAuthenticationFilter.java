@@ -16,6 +16,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+// 입력받은 토큰을 기반으로 유효성 검사하는 기능을 하는 클래스
+
 @Slf4j
 @Component
 @RequiredArgsConstructor

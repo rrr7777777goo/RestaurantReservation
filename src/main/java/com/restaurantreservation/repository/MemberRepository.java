@@ -13,7 +13,7 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     @Query(value="select m.id as id, m.signupid as signupid \n" +
             " from com.restaurantreservation.domain.member.Member as m \n" +
             " where m.signupid = ?1")
-    Optional<Auth.IdInterface> findidBySignupid(String signupid);
+    Optional<Auth.IdInterface> findidBySignupid(String signupid); // 고유번호, 아이디만 가져오게 설정
 
     boolean existsBySignupid(String signupid);
 }

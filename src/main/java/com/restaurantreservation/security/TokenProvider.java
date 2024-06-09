@@ -16,11 +16,13 @@ import org.springframework.util.StringUtils;
 
 import java.util.*;
 
+// 토큰 생성 관련 클래스
+
 @Component
 @RequiredArgsConstructor
 public class TokenProvider {
 
-    private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 30분
+    private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 토큰 만료 시간 30분
     private static final String KEY_ROLES = "roles";
 
     private final MemberService memberService;
@@ -28,12 +30,7 @@ public class TokenProvider {
     @Value("${spring.jwt.secret}")
     private String secretKey;
 
-    /**
-     * 토큰 생성(발급)
-     * @param username
-     * @param roles
-     * @return
-     */
+    // jwt 생성
     public String generateToken(String username, Set<String> roles) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put(KEY_ROLES, roles);

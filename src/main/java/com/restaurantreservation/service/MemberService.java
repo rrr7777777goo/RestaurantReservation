@@ -5,8 +5,6 @@ import com.restaurantreservation.domain.member.Member;
 import com.restaurantreservation.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,12 +18,13 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
-    private final int minLength_signupid = 6;
-    private final int maxLength_signupid = 20;
+    private final int minLength_signupid = 6; // 아이디 최소 길이
+    private final int maxLength_signupid = 20; // 아이디 최대 길이
 
-    private final int minLength_password = 8;
-    private final int maxLength_password = 20;
+    private final int minLength_password = 8; // 비밀번호 최소 길이
+    private final int maxLength_password = 20; // 비밀번호 최대 길이
 
+    // 회원가입
     public Member register(Auth.SignUp member) {
         if(member.getSignupid().length() < minLength_signupid || member.getSignupid().length() > maxLength_signupid) {
             throw new RuntimeException("아이디의 길이는 " + minLength_signupid + "이상 " + maxLength_signupid + "이하여야 합니다.");
@@ -43,11 +42,13 @@ public class MemberService {
         return result;
     }
 
+    // 아이디를 기반으로 유저 정보 가져오기
     public Auth.IdInterface loadUserBySignupid(String signupid) {
         return this.memberRepository.findidBySignupid(signupid)
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 ID입니다. -> " + signupid));
     }
 
+    // 입력받은 아이디, 비밀번호를 기반으로 유저정보 가져오기 (로그인)
     public Member authenticate(Auth.SignIn member) {
         var user = this.memberRepository.findBySignupid(member.getSignupid())
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 ID입니다. -> " + member.getSignupid()));
